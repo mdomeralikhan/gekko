@@ -30,6 +30,19 @@ config.watch = {
 //                       CONFIGURING TRADING ADVICE
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+config.temac = {
+  if(macd1>0 && macd2>0 && macd3>0 && ema5>ema14 && ema5>ema26) {
+    this.advice('long');
+    // save the long price
+    this.lastLongPrice = this.candle.close;
+  log.debug('buy price:', this.lastPrice.toFixed(8))
+  } 
+  
+  if(macd1<0 && macd2<0 && macd3<0 && ema5<ema14 && ema5<ema26 && this.candle.close > this.lastLongPrice) {  
+    this.advice('short');
+  log.debug('sell price:', this.lastPrice.toFixed(8));
+  } 
+
 config.tradingAdvisor = {
   enabled: true,
   method: 'MACD',
